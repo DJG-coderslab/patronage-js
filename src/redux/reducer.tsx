@@ -1,15 +1,14 @@
 import { combineReducers } from "redux";
 import { SET_USERS } from "./actions";
+import user_type from "./../types/user";
 
 type AppState = {
-  // usersForDeleting: Array,
   dwa: string;
-  users: [];
+  users: user_type[];
 };
 type Action = { type: string; payload: any };
 
 const initState: AppState = {
-  // usersForDeleting: [],
   users: [],
   dwa: "",
 };
