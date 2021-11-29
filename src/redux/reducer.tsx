@@ -1,18 +1,24 @@
 import { combineReducers } from "redux";
+import { SET_USERS } from "./actions";
 
 type AppState = {
-    raz: string,
-    dwa: string,
+  // usersForDeleting: Array,
+  dwa: string;
+  users: [];
 };
-type Action = { type: "TEST"; payload: string };
+type Action = { type: string; payload: any };
 
 const initState: AppState = {
-  raz: "",
+  // usersForDeleting: [],
+  users: [],
   dwa: "",
 };
 
 const User = (state: AppState = initState, action: Action): AppState => {
   switch (action.type) {
+    case SET_USERS:
+      return { ...state, users: action.payload };
+
     default:
       return state;
   }
