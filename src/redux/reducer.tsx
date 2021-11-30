@@ -1,19 +1,17 @@
 import { combineReducers } from "redux";
 import { SET_USERS } from "./actions";
-import user_type from "./../types/user";
+import userType from "./../types/user";
 
 type AppState = {
-  dwa: string;
-  users: user_type[];
+  users: userType[];
 };
 type Action = { type: string; payload: any };
 
 const initState: AppState = {
   users: [],
-  dwa: "",
 };
 
-const User = (state: AppState = initState, action: Action): AppState => {
+const userReducer = (state: AppState = initState, action: Action): AppState => {
   switch (action.type) {
     case SET_USERS:
       return { ...state, users: action.payload };
@@ -24,5 +22,5 @@ const User = (state: AppState = initState, action: Action): AppState => {
 };
 
 export default combineReducers({
-  User,
+  userReducer,
 });
