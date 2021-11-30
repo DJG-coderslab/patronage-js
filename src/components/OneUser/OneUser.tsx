@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { MDBCol, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
+import { setChecked } from "./../../redux/actions";
 
 type Props = {
   user: {
@@ -12,6 +14,7 @@ type Props = {
 };
 
 const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
+  const dispatch = useDispatch();
   const [isExpand, setIsExpand] = useState<Boolean>(false);
 
   const age = (dateOfBirth: string) => {
@@ -23,17 +26,24 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
 
   const toggleExpand = () => setIsExpand(!isExpand);
 
+  const setCheckedItem = (
+    e: MouseEventHandler<HTMLInputElement>,
+    id: string
+  ) => {
+    dispatch(setChecked({ state: e.target.checked, id }));
+  };
+
   return (
     <MDBContainer className="border-bottom py-2">
-      <MDBRow onClick={toggleExpand}>
-        <MDBCol md="1">
+      <MDBRow>
+        <MDBCol md="1" onClick={toggleExpand}>
           {isExpand ? (
             <MDBIcon fas icon="chevron-down" />
           ) : (
             <MDBIcon fas icon="chevron-right" />
           )}
         </MDBCol>
-        <MDBCol md="10">
+        <MDBCol md="10" onClick={toggleExpand}>
           <MDBRow>
             <MDBCol md="3">
               <h5>
@@ -73,7 +83,16 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
             </MDBRow>
           )}
         </MDBCol>
-        <MDBCol md="1">A</MDBCol>
+        <MDBCol md="1">
+          <div>
+            <input
+              onClick={(e) => setCheckedItem(e, user.id)}
+              className="form-check-input"
+              type="checkbox"
+              value=""
+            />
+          </div>
+        </MDBCol>
       </MDBRow>
     </MDBContainer>
   );

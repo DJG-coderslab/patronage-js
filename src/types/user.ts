@@ -11,4 +11,5 @@ export default interface userType {
   hobbies: [string];
   isDeleting?: Boolean;
   isShowing?: Boolean;
+  isChecked?: Boolean;
 }
