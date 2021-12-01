@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
+import ConfirmDelete from "../ConfirmDelete";
 import OneUser from "../OneUser";
+import TableFooter from "../TableFooter";
 import userType from "../../types/user";
 
 export default function UsersList() {
@@ -8,6 +10,7 @@ export default function UsersList() {
 
   return (
     <>
+      <ConfirmDelete />
       <MDBContainer>
         <MDBRow>
           <MDBCol>nazwa z szukajką</MDBCol>
@@ -17,9 +20,17 @@ export default function UsersList() {
         </MDBRow>
       </MDBContainer>
       <MDBContainer>
-        {users.map((item: userType) => (
-          <OneUser key={item.id} user={item} />
-        ))}
+        {users
+          .filter((item: userType) => {
+            if (item.isShowing) {
+              return true;
+            }
+            return false;
+          })
+          .map((item: userType) => {
+            return <OneUser key={item.id} user={item} />;
+          })}
+        <TableFooter />
       </MDBContainer>
     </>
   );

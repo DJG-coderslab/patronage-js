@@ -1,22 +1,35 @@
 import { combineReducers } from "redux";
-import { SET_CHECKING, SET_USERS } from "./actions";
+import {
+  MARK_TO_DELETE,
+  RESET_CONFIRMATION,
+  SET_CHECKING,
+  SET_CONFIRMATION,
+  SET_USERS,
+} from "./actions";
 import userType from "./../types/user";
 import actionType from "./../types/action";
 
 type AppState = {
   users: userType[];
+  showConfirmation: Boolean;
 };
 
 const initState: AppState = {
   users: [],
+  showConfirmation: false,
 };
 
 const userReducer = (
   state: AppState = initState,
   { type, payload }: actionType
 ): AppState => {
-
   switch (type) {
+    case MARK_TO_DELETE:
+      return state;
+
+    case RESET_CONFIRMATION:
+      return { ...state, showConfirmation: false };
+
     case SET_CHECKING:
       const checkedUsers: userType[] = state.users;
       checkedUsers.forEach((element: userType) => {
@@ -25,6 +38,9 @@ const userReducer = (
         }
       });
       return { ...state, users: checkedUsers };
+
+    case SET_CONFIRMATION:
+      return { ...state, showConfirmation: true };
 
     case SET_USERS:
       const users: userType[] = [];

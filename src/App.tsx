@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Provider } from "react-redux";
-import "./App.css";
-import store from "./redux/store";
-import OneUser from "./components/OneUser";
-import UsersList from "./components/UsersList";
 import { getUsersList } from "./redux/actions";
+import "./App.css";
+import UsersList from "./components/UsersList";
+import Footer from "./components/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,9 +13,10 @@ function App() {
   }, [dispatch]);
 
   return (
-    // <Provider store={store}>
-    <UsersList />
-    // </Provider>
+    <>
+      <UsersList />
+      <Footer />
+    </>
   );
 }
 
