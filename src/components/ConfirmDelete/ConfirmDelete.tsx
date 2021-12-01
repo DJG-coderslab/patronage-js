@@ -9,7 +9,13 @@ import {
   MDBModalTitle,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { markToDelete, resetConfirmation } from "../../redux/actions";
+import {
+  markToDelete,
+  resetConfirmation,
+  undoDeleteTimer,
+  setShowUndoWindow,
+  setAllowDelete,
+} from "../../redux/actions";
 
 export default function ConfirmDelete() {
   const dispatch = useDispatch();
@@ -19,7 +25,10 @@ export default function ConfirmDelete() {
   };
   const deleteItems = () => {
     dispatch(markToDelete());
+    dispatch(undoDeleteTimer());
     dispatch(resetConfirmation());
+    dispatch(setAllowDelete(true));
+    dispatch(setShowUndoWindow());
   };
   return (
     <MDBModal show={showConfirmation} staticBackdrop tabIndex="-1">

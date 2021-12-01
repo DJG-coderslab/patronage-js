@@ -4,18 +4,18 @@ import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import ConfirmDelete from "../ConfirmDelete";
 import OneUser from "../OneUser";
 import TableFooter from "../TableFooter";
+import Undo from "./../Undo";
 import userType from "../../types/user";
 
 export default function UsersList() {
   const { users, reRenderUserList } = useSelector((state) => state.userReducer);
 
-  useEffect(() => {
-    console.log("UserLisr rerender");
-  }, [reRenderUserList]);
+  useEffect(() => {}, [reRenderUserList]);
 
   return (
     <>
       <ConfirmDelete />
+      <Undo />
       <MDBContainer>
         <MDBRow>
           <MDBCol>nazwa z szukajką</MDBCol>
