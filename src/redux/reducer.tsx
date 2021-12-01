@@ -12,11 +12,13 @@ import actionType from "./../types/action";
 type AppState = {
   users: userType[];
   showConfirmation: Boolean;
+  reRenderUserList: Boolean;
 };
 
 const initState: AppState = {
   users: [],
   showConfirmation: false,
+  reRenderUserList: false,
 };
 
 const userReducer = (
@@ -25,7 +27,18 @@ const userReducer = (
 ): AppState => {
   switch (type) {
     case MARK_TO_DELETE:
-      return state;
+      const markToDelete: userType[] = state.users;
+      const { reRenderUserList } = state;
+      markToDelete.forEach((element) => {
+        if (element.isChecked) {
+          element.isShowing = false;
+        }
+      });
+      return {
+        ...state,
+        users: markToDelete,
+        reRenderUserList: !reRenderUserList,
+      };
 
     case RESET_CONFIRMATION:
       return { ...state, showConfirmation: false };

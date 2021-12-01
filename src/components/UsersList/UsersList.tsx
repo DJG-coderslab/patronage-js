@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import ConfirmDelete from "../ConfirmDelete";
@@ -6,7 +7,11 @@ import TableFooter from "../TableFooter";
 import userType from "../../types/user";
 
 export default function UsersList() {
-  const users = useSelector((state) => state.userReducer.users);
+  const { users, reRenderUserList } = useSelector((state) => state.userReducer);
+
+  useEffect(() => {
+    console.log("UserLisr rerender");
+  }, [reRenderUserList]);
 
   return (
     <>

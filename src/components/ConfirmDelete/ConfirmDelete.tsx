@@ -9,23 +9,20 @@ import {
   MDBModalTitle,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { resetConfirmation } from "../../redux/actions";
+import { markToDelete, resetConfirmation } from "../../redux/actions";
 
 export default function ConfirmDelete() {
   const dispatch = useDispatch();
   const { showConfirmation } = useSelector((state) => state.userReducer);
-  //   const [showConfirmation, setShowConfirmation] = useState(false);
-  //   const toggleShow = () => setShowConfirmation(!showConfirmation);
   const closeWindow = () => {
     dispatch(resetConfirmation());
   };
+  const deleteItems = () => {
+    dispatch(markToDelete());
+    dispatch(resetConfirmation());
+  };
   return (
-    <MDBModal
-      show={showConfirmation}
-      staticBackdrop
-      tabIndex="-1"
-    >
+    <MDBModal show={showConfirmation} staticBackdrop tabIndex="-1">
       <MDBModalDialog>
         <MDBModalContent>
           <MDBModalHeader>
@@ -35,9 +32,11 @@ export default function ConfirmDelete() {
           <MDBModalBody>Confirm deleting items?</MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="secondary" onClick={closeWindow}>
-              Close
+              Cancel
             </MDBBtn>
-            <MDBBtn>Save</MDBBtn>
+            <MDBBtn color="danger" onClick={deleteItems}>
+              Delete it!
+            </MDBBtn>
           </MDBModalFooter>
         </MDBModalContent>
       </MDBModalDialog>
