@@ -6,6 +6,7 @@ import OneUser from "../OneUser";
 import TableFooter from "../TableFooter";
 import Undo from "./../Undo";
 import userType from "../../types/user";
+import TableHeader from "../TableHeader";
 
 export default function UsersList() {
   const { users, reRenderUserList } = useSelector((state) => state.userReducer);
@@ -20,9 +21,7 @@ export default function UsersList() {
         <MDBRow>
           <MDBCol>nazwa z szukajką</MDBCol>
         </MDBRow>
-        <MDBRow>
-          <MDBCol>Nagłówki</MDBCol>
-        </MDBRow>
+        <TableHeader />
       </MDBContainer>
       <MDBContainer>
         {users

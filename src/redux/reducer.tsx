@@ -2,33 +2,35 @@ import { combineReducers } from "redux";
 import {
   MARK_TO_DELETE,
   RESET_CONFIRMATION,
-  RESET_SHOW_UNDO_WINDOW,
   SET_ALLOW_DELETE,
   SET_CHECKING,
   SET_CONFIRMATION,
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
   SET_USERS,
+  UNDO_DETETE,
 } from "./actions";
 import userType from "./../types/user";
 import actionType from "./../types/action";
 
 type AppState = {
   users: userType[];
-  showConfirmation: Boolean;
-  reRenderUserList: Boolean;
-  timerID: string;
-  showUndoWindow: Boolean;
   allowDelete: Boolean;
+  reRenderUserList: Boolean;
+  setCheckAll: Boolean;
+  showConfirmation: Boolean;
+  showUndoWindow: Boolean;
+  timerID: string;
 };
 
 const initState: AppState = {
   users: [],
-  showConfirmation: false,
-  reRenderUserList: false,
-  timerID: "",
-  showUndoWindow: false,
   allowDelete: false,
+  reRenderUserList: false,
+  setCheckAll: false,
+  showConfirmation: false,
+  showUndoWindow: false,
+  timerID: "",
 };
 
 const userReducer = (
@@ -42,6 +44,7 @@ const userReducer = (
       markToDelete.forEach((element) => {
         if (element.isChecked) {
           element.isShowing = false;
+          element.isDeleting = true;
         }
       });
       return {
@@ -52,9 +55,6 @@ const userReducer = (
 
     case RESET_CONFIRMATION:
       return { ...state, showConfirmation: false };
-
-    case RESET_SHOW_UNDO_WINDOW:
-      return { ...state, showUndoWindow: false };
 
     case SET_ALLOW_DELETE:
       return { ...state, allowDelete: payload };
@@ -72,7 +72,7 @@ const userReducer = (
       return { ...state, showConfirmation: true };
 
     case SET_SHOW_UNDO_WINDOW:
-      return { ...state, showUndoWindow: true };
+      return { ...state, showUndoWindow: payload };
 
     case SET_TIMER_ID:
       return { ...state, timerID: payload };
@@ -89,6 +89,17 @@ const userReducer = (
         users.push(element);
       });
       return { ...state, users };
+
+    case UNDO_DETETE:
+      const deletedUsers: userType[] = state.users;
+      deletedUsers.forEach((element: userType) => {
+        if (element.isDeleting) {
+          element.isShowing = true;
+          element.isDeleting = false;
+          element.isChecked = false;
+        }
+      });
+      return { ...state, users: deletedUsers };
 
     default:
       return state;

@@ -9,16 +9,23 @@ import {
   MDBModalTitle,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
-import { resetShowUndoWindow, stopUndoTimer } from "../../redux/actions";
+import {
+  setAllowDelete,
+  setShowUndoWindow,
+  undoDelete,
+} from "../../redux/actions";
 
 export default function Undo() {
   const dispatch = useDispatch();
   const { showUndoWindow } = useSelector((state) => state.userReducer);
   const closeWindow = () => {
-    dispatch(resetShowUndoWindow());
+    dispatch(setShowUndoWindow(false));
+    // TODO call removing from DB
   };
   const handlingUndo = () => {
-    dispatch(stopUndoTimer());
+    dispatch(setAllowDelete(false));
+    dispatch(undoDelete());
+    dispatch(setShowUndoWindow(false));
   };
   return (
     <MDBModal show={showUndoWindow} staticBackdrop tabIndex="-1">

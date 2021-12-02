@@ -28,7 +28,7 @@ export default function ConfirmDelete() {
     dispatch(undoDeleteTimer());
     dispatch(resetConfirmation());
     dispatch(setAllowDelete(true));
-    dispatch(setShowUndoWindow());
+    dispatch(setShowUndoWindow(true));
   };
   return (
     <MDBModal show={showConfirmation} staticBackdrop tabIndex="-1">
