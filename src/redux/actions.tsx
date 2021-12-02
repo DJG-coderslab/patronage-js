@@ -1,6 +1,7 @@
 import { URLDB } from "./../configApp";
 import actionType from "../types/action";
 
+const CHECK_ALL: string = "CHECK_ALL";
 const MARK_TO_DELETE: string = "MARK_TO_DELETE";
 const RESET_CONFIRMATION: string = "RESET_CONFIRMATION";
 const SET_ALLOW_DELETE: string = "SET_ALLOW_DELETE";
@@ -10,6 +11,11 @@ const SET_SHOW_UNDO_WINDOW: string = "SET_SHOW_UNDO_WINDOW";
 const SET_USERS: string = "SET_USERS";
 const SET_TIMER_ID: string = "SET_TIMER_ID";
 const UNDO_DETETE: string = "UNDO_DELETE";
+
+const checkAll: any = (value: Boolean) => ({
+  type: CHECK_ALL,
+  payload: value,
+});
 
 const markToDelete: any = (): actionType => ({
   type: MARK_TO_DELETE,
@@ -82,6 +88,7 @@ const undoDeleteTimer = () => (dispatch: any, getState: any) => {
 };
 
 export {
+  CHECK_ALL,
   MARK_TO_DELETE,
   SET_ALLOW_DELETE,
   SET_CHECKING,
@@ -91,6 +98,7 @@ export {
   SET_USERS,
   RESET_CONFIRMATION,
   UNDO_DETETE,
+  checkAll,
   getUsersList,
   markToDelete,
   resetConfirmation,

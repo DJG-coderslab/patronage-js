@@ -90,6 +90,8 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
               className="form-check-input"
               type="checkbox"
               value=""
+              checked={user.isChecked}
+              onChange={() => {}}
             />
           </div>
         </MDBCol>

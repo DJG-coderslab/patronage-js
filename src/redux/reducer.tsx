@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import {
+  CHECK_ALL,
   MARK_TO_DELETE,
   RESET_CONFIRMATION,
   SET_ALLOW_DELETE,
@@ -17,7 +18,6 @@ type AppState = {
   users: userType[];
   allowDelete: Boolean;
   reRenderUserList: Boolean;
-  setCheckAll: Boolean;
   showConfirmation: Boolean;
   showUndoWindow: Boolean;
   timerID: string;
@@ -27,7 +27,6 @@ const initState: AppState = {
   users: [],
   allowDelete: false,
   reRenderUserList: false,
-  setCheckAll: false,
   showConfirmation: false,
   showUndoWindow: false,
   timerID: "",
@@ -38,6 +37,20 @@ const userReducer = (
   { type, payload }: actionType
 ): AppState => {
   switch (type) {
+    case CHECK_ALL:
+      const checkedAllUsers: userType[] = state.users;
+      const reRenderCheckedAllUsers = state.reRenderUserList;
+      checkedAllUsers.forEach((element: userType) => {
+        if (element.isShowing) {
+          element.isChecked = payload;
+        }
+      });
+      return {
+        ...state,
+        users: checkedAllUsers,
+        reRenderUserList: !reRenderCheckedAllUsers,
+      };
+
     case MARK_TO_DELETE:
       const markToDelete: userType[] = state.users;
       const { reRenderUserList } = state;

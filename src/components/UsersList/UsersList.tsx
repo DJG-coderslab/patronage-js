@@ -11,7 +11,9 @@ import TableHeader from "../TableHeader";
 export default function UsersList() {
   const { users, reRenderUserList } = useSelector((state) => state.userReducer);
 
-  useEffect(() => {}, [reRenderUserList]);
+  useEffect(() => {
+    console.log("reRender UserList");
+  }, [reRenderUserList]);
 
   return (
     <>
