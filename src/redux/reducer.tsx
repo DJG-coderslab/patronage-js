@@ -6,9 +6,11 @@ import {
   SET_ALLOW_DELETE,
   SET_CHECKING,
   SET_CONFIRMATION,
+  SET_SHOW_EDIT_USER_WINDOW,
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
   SET_USERS,
+  SET_USERID_TO_EDIT,
   UNDO_DETETE,
 } from "./actions";
 import userType from "./../types/user";
@@ -19,8 +21,10 @@ type AppState = {
   allowDelete: Boolean;
   reRenderUserList: Boolean;
   showConfirmation: Boolean;
+  showEditUserWindow: Boolean;
   showUndoWindow: Boolean;
   timerID: string;
+  userIDToEdit: string;
 };
 
 const initState: AppState = {
@@ -28,8 +32,10 @@ const initState: AppState = {
   allowDelete: false,
   reRenderUserList: false,
   showConfirmation: false,
+  showEditUserWindow: false,
   showUndoWindow: false,
   timerID: "",
+  userIDToEdit: "",
 };
 
 const userReducer = (
@@ -84,6 +90,9 @@ const userReducer = (
     case SET_CONFIRMATION:
       return { ...state, showConfirmation: true };
 
+    case SET_SHOW_EDIT_USER_WINDOW:
+      return { ...state, showEditUserWindow: payload };
+
     case SET_SHOW_UNDO_WINDOW:
       return { ...state, showUndoWindow: payload };
 
@@ -102,6 +111,9 @@ const userReducer = (
         users.push(element);
       });
       return { ...state, users };
+
+    case SET_USERID_TO_EDIT:
+      return { ...state, userIDToEdit: payload };
 
     case UNDO_DETETE:
       const deletedUsers: userType[] = state.users;

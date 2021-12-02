@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { MDBCol, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
-import { setChecked } from "./../../redux/actions";
+import {
+  setChecked,
+  setShowEditUserWindow,
+  setUserIDToEdit,
+} from "./../../redux/actions";
 
 type Props = {
   user: {
@@ -31,6 +35,11 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
     id: string
   ) => {
     dispatch(setChecked({ state: e.target.checked, id }));
+  };
+
+  const editUser = (id: string) => {
+    dispatch(setShowEditUserWindow(true));
+    dispatch(setUserIDToEdit(id));
   };
 
   return (
@@ -94,6 +103,17 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
               onChange={() => {}}
             />
           </div>
+          {isExpand && (
+            <div>
+              <MDBIcon
+                onClick={() => {
+                  editUser(user.id);
+                }}
+                far
+                icon="edit"
+              />
+            </div>
+          )}
         </MDBCol>
       </MDBRow>
     </MDBContainer>

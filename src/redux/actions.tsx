@@ -7,12 +7,14 @@ const RESET_CONFIRMATION: string = "RESET_CONFIRMATION";
 const SET_ALLOW_DELETE: string = "SET_ALLOW_DELETE";
 const SET_CHECKING: string = "SET_CHECKING";
 const SET_CONFIRMATION: string = "SET_CONFIRMATION";
+const SET_SHOW_EDIT_USER_WINDOW: string = "SHOW_EDIT_USER_WINDOW";
 const SET_SHOW_UNDO_WINDOW: string = "SET_SHOW_UNDO_WINDOW";
 const SET_USERS: string = "SET_USERS";
+const SET_USERID_TO_EDIT: string = "SET_USERID_TO_EDIT";
 const SET_TIMER_ID: string = "SET_TIMER_ID";
 const UNDO_DETETE: string = "UNDO_DELETE";
 
-const checkAll: any = (value: Boolean) => ({
+const checkAll: any = (value: Boolean): actionType => ({
   type: CHECK_ALL,
   payload: value,
 });
@@ -42,6 +44,11 @@ const setConfirmation: any = (): actionType => ({
   payload: true,
 });
 
+const setShowEditUserWindow: any = (value: Boolean): actionType => ({
+  type: SET_SHOW_EDIT_USER_WINDOW,
+  payload: value,
+});
+
 const setShowUndoWindow: any = (value: Boolean): actionType => ({
   type: SET_SHOW_UNDO_WINDOW,
   payload: value,
@@ -54,6 +61,11 @@ const setTimerID: any = (value: string): actionType => ({
 
 const setUsers: any = (value: []): actionType => ({
   type: SET_USERS,
+  payload: value,
+});
+
+const setUserIDToEdit: any = (value: string): actionType => ({
+  type: SET_USERID_TO_EDIT,
   payload: value,
 });
 
@@ -93,9 +105,11 @@ export {
   SET_ALLOW_DELETE,
   SET_CHECKING,
   SET_CONFIRMATION,
+  SET_SHOW_EDIT_USER_WINDOW,
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
   SET_USERS,
+  SET_USERID_TO_EDIT,
   RESET_CONFIRMATION,
   UNDO_DETETE,
   checkAll,
@@ -105,8 +119,10 @@ export {
   setAllowDelete,
   setChecked,
   setConfirmation,
+  setShowEditUserWindow,
   setShowUndoWindow,
   setUsers,
+  setUserIDToEdit,
   undoDelete,
   undoDeleteTimer,
 };
