@@ -10,7 +10,7 @@ import {
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
   SET_USERS,
-  SET_USERID_TO_EDIT,
+  SET_USER_TO_EDIT,
   UNDO_DETETE,
 } from "./actions";
 import userType from "./../types/user";
@@ -24,7 +24,7 @@ type AppState = {
   showEditUserWindow: Boolean;
   showUndoWindow: Boolean;
   timerID: string;
-  userIDToEdit: string;
+  userToEdit: userType;
 };
 
 const initState: AppState = {
@@ -35,7 +35,18 @@ const initState: AppState = {
   showEditUserWindow: false,
   showUndoWindow: false,
   timerID: "",
-  userIDToEdit: "",
+  userToEdit: {
+    id: "-1",
+    name: "John",
+    lastName: "Doe",
+    email: "",
+    age: -1,
+    gender: "",
+    phoneNumber: "",
+    address: "",
+    dateOfBirth: "",
+    hobbies: [""],
+  },
 };
 
 const userReducer = (
@@ -112,8 +123,8 @@ const userReducer = (
       });
       return { ...state, users };
 
-    case SET_USERID_TO_EDIT:
-      return { ...state, userIDToEdit: payload };
+    case SET_USER_TO_EDIT:
+      return { ...state, userToEdit: payload };
 
     case UNDO_DETETE:
       const deletedUsers: userType[] = state.users;

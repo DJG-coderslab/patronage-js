@@ -12,9 +12,7 @@ import EditUser from "../EditUser";
 export default function UsersList() {
   const { users, reRenderUserList } = useSelector((state) => state.userReducer);
 
-  useEffect(() => {
-    console.log("reRender UserList");
-  }, [reRenderUserList]);
+  useEffect(() => {}, [reRenderUserList]);
 
   return (
     <>

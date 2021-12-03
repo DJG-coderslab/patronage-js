@@ -1,5 +1,6 @@
 import { URLDB } from "./../configApp";
 import actionType from "../types/action";
+import userType from "./../types/user";
 
 const CHECK_ALL: string = "CHECK_ALL";
 const MARK_TO_DELETE: string = "MARK_TO_DELETE";
@@ -10,7 +11,7 @@ const SET_CONFIRMATION: string = "SET_CONFIRMATION";
 const SET_SHOW_EDIT_USER_WINDOW: string = "SHOW_EDIT_USER_WINDOW";
 const SET_SHOW_UNDO_WINDOW: string = "SET_SHOW_UNDO_WINDOW";
 const SET_USERS: string = "SET_USERS";
-const SET_USERID_TO_EDIT: string = "SET_USERID_TO_EDIT";
+const SET_USER_TO_EDIT: string = "SET_USER_TO_EDIT";
 const SET_TIMER_ID: string = "SET_TIMER_ID";
 const UNDO_DETETE: string = "UNDO_DELETE";
 
@@ -64,8 +65,8 @@ const setUsers: any = (value: []): actionType => ({
   payload: value,
 });
 
-const setUserIDToEdit: any = (value: string): actionType => ({
-  type: SET_USERID_TO_EDIT,
+const setUserToEdit: any = (value: userType): actionType => ({
+  type: SET_USER_TO_EDIT,
   payload: value,
 });
 
@@ -109,7 +110,7 @@ export {
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
   SET_USERS,
-  SET_USERID_TO_EDIT,
+  SET_USER_TO_EDIT,
   RESET_CONFIRMATION,
   UNDO_DETETE,
   checkAll,
@@ -122,7 +123,7 @@ export {
   setShowEditUserWindow,
   setShowUndoWindow,
   setUsers,
-  setUserIDToEdit,
+  setUserToEdit,
   undoDelete,
   undoDeleteTimer,
 };

@@ -4,8 +4,9 @@ import { MDBCol, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
 import {
   setChecked,
   setShowEditUserWindow,
-  setUserIDToEdit,
+  setUserToEdit,
 } from "./../../redux/actions";
+import userType from "./../../types/user";
 
 type Props = {
   user: {
@@ -37,9 +38,9 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
     dispatch(setChecked({ state: e.target.checked, id }));
   };
 
-  const editUser = (id: string) => {
+  const editUser = (value: userType) => {
     dispatch(setShowEditUserWindow(true));
-    dispatch(setUserIDToEdit(id));
+    dispatch(setUserToEdit(value));
   };
 
   return (
@@ -107,7 +108,7 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
             <div>
               <MDBIcon
                 onClick={() => {
-                  editUser(user.id);
+                  editUser(user);
                 }}
                 far
                 icon="edit"
