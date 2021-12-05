@@ -1,6 +1,7 @@
 import { URLDB } from "./../configApp";
 import actionType from "../types/action";
 import userType from "./../types/user";
+import hobbyType from "../types/hobbies";
 
 const CHECK_ALL: string = "CHECK_ALL";
 const MARK_TO_DELETE: string = "MARK_TO_DELETE";
@@ -8,6 +9,7 @@ const RESET_CONFIRMATION: string = "RESET_CONFIRMATION";
 const SET_ALLOW_DELETE: string = "SET_ALLOW_DELETE";
 const SET_CHECKING: string = "SET_CHECKING";
 const SET_CONFIRMATION: string = "SET_CONFIRMATION";
+const SET_HOBBIES: string = "SET_HOBBIES";
 const SET_SHOW_EDIT_USER_WINDOW: string = "SHOW_EDIT_USER_WINDOW";
 const SET_SHOW_UNDO_WINDOW: string = "SET_SHOW_UNDO_WINDOW";
 const SET_USERS: string = "SET_USERS";
@@ -25,11 +27,6 @@ const markToDelete: any = (): actionType => ({
   payload: null,
 });
 
-const setChecked: any = (value: Boolean): actionType => ({
-  type: SET_CHECKING,
-  payload: value,
-});
-
 const resetConfirmation: any = (): actionType => ({
   type: RESET_CONFIRMATION,
   payload: false,
@@ -40,9 +37,19 @@ const setAllowDelete: any = (value: Boolean): actionType => ({
   payload: value,
 });
 
+const setChecked: any = (value: Boolean): actionType => ({
+  type: SET_CHECKING,
+  payload: value,
+});
+
 const setConfirmation: any = (): actionType => ({
   type: SET_CONFIRMATION,
   payload: true,
+});
+
+const setHobbies: any = (value: hobbyType): actionType => ({
+  type: SET_HOBBIES,
+  payload: value,
 });
 
 const setShowEditUserWindow: any = (value: Boolean): actionType => ({
@@ -88,6 +95,19 @@ const getUsersList = () => (dispatch: any) => {
   getAllUsers();
 };
 
+const getHobbies = () => (dispatch: any) => {
+  const fetchHobbies = async () => {
+    try {
+      const resp = await fetch(`${URLDB}/hobbies`);
+      const data = await resp.json();
+      dispatch(setHobbies(data));
+    } catch (err) {
+      console.error("Something was wrong with getting the hobbies ", err);
+    }
+  };
+  fetchHobbies();
+};
+
 const undoDeleteTimer = () => (dispatch: any, getState: any) => {
   const timerID = setTimeout(() => {
     console.log("Timer is done");
@@ -106,6 +126,7 @@ export {
   SET_ALLOW_DELETE,
   SET_CHECKING,
   SET_CONFIRMATION,
+  SET_HOBBIES,
   SET_SHOW_EDIT_USER_WINDOW,
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
@@ -114,6 +135,7 @@ export {
   RESET_CONFIRMATION,
   UNDO_DETETE,
   checkAll,
+  getHobbies,
   getUsersList,
   markToDelete,
   resetConfirmation,

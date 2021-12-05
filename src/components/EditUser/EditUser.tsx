@@ -26,6 +26,7 @@ export default function EditUser() {
   const [birthday, connectBirthday, setBirthday] = useInput(u.dateOfBirth);
   const [phone, connectPhone, setPhone] = useInput(u.phoneNumber);
   const [gender, connectGender, setGender] = useInput(u.gender);
+  const [hobbies, connectHobbies, setHobbies] = useInput("");
   const closeWindow = () => {
     dispatch(setShowEditUserWindow(false));
     // dispatch(setUserToEdit(""));
@@ -110,6 +111,15 @@ export default function EditUser() {
                 />
                 <MDBInput
                   label="Type your gender"
+                  icon="lock"
+                  group
+                  type="text"
+                  validate
+                  className="py-2 my-3"
+                  {...connectGender}
+                />
+                <MDBInput
+                  label="Select your hobbies"
                   icon="lock"
                   group
                   type="text"

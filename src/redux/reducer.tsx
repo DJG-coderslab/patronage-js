@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import * as R from "ramda";
 import {
   CHECK_ALL,
   MARK_TO_DELETE,
@@ -6,6 +7,7 @@ import {
   SET_ALLOW_DELETE,
   SET_CHECKING,
   SET_CONFIRMATION,
+  SET_HOBBIES,
   SET_SHOW_EDIT_USER_WINDOW,
   SET_SHOW_UNDO_WINDOW,
   SET_TIMER_ID,
@@ -13,11 +15,13 @@ import {
   SET_USER_TO_EDIT,
   UNDO_DETETE,
 } from "./actions";
-import userType from "./../types/user";
 import actionType from "./../types/action";
+import hobbyType from "../types/hobbies";
+import userType from "./../types/user";
 
 type AppState = {
   users: userType[];
+  hobbies: hobbyType[];
   allowDelete: Boolean;
   reRenderUserList: Boolean;
   showConfirmation: Boolean;
@@ -29,6 +33,7 @@ type AppState = {
 
 const initState: AppState = {
   users: [],
+  hobbies: [],
   allowDelete: false,
   reRenderUserList: false,
   showConfirmation: false,
@@ -90,12 +95,12 @@ const userReducer = (
       return { ...state, allowDelete: payload };
 
     case SET_CHECKING:
-      const checkedUsers: userType[] = state.users;
-      checkedUsers.forEach((element: userType) => {
-        if (element.id === payload.id) {
-          element.isChecked = payload.state;
+      const checkedUsers = R.map((user) => {
+        if (user.id === payload.id) {
+          user.isChecked = payload.state;
         }
-      });
+        return user;
+      }, state.users);
       return { ...state, users: checkedUsers };
 
     case SET_CONFIRMATION:
@@ -111,18 +116,17 @@ const userReducer = (
       return { ...state, timerID: payload };
 
     case SET_USERS:
-      const users: userType[] = [];
-      payload.forEach((element: userType) => {
-        element = {
-          ...element,
-          isChecked: false,
-          isDeleting: false,
-          isShowing: true,
-        };
-        users.push(element);
-      });
+      const users = R.map((element: userType) => ({
+        ...element,
+        isChecked: false,
+        isDeleting: false,
+        isShowing: true,
+      }))(payload);
       return { ...state, users };
-
+    
+    case SET_HOBBIES:
+      return { ...state, hobbies: payload };
+    
     case SET_USER_TO_EDIT:
       return { ...state, userToEdit: payload };
 
