@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector, useReducer } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   MDBBtn,
   MDBModal,
@@ -14,6 +14,7 @@ import {
 import { setShowEditUserWindow, setUserToEdit } from "../../redux/actions";
 import useInput from "./../../hooks/useInput";
 import userType from "../../types/user";
+import { Form } from "react-bootstrap";
 
 export default function EditUser() {
   const dispatch = useDispatch();
@@ -51,85 +52,30 @@ export default function EditUser() {
             <MDBModalTitle>Edit user</MDBModalTitle>
             <MDBBtn className="btn-close" color="none" onClick={closeWindow} />
           </MDBModalHeader>
-          <MDBModalBody>
-            <form>
-              <div className="grey-text">
-                <MDBInput
-                  label="Type your name"
-                  group
-                  type="text"
-                  validate
-                  error="wrong"
-                  success="right"
-                  className="py-2 my-3"
-                  {...connectName}
-                />
-                <MDBInput
-                  label="Type your last name"
-                  icon="lock"
-                  group
-                  type="text"
-                  validate
-                  className="py-2 my-3"
-                  {...connectLastName}
-                />
-                <MDBInput
-                  label="Type your email"
-                  icon="lock"
-                  group
-                  type="email"
-                  validate
-                  className="py-2 my-3"
-                  {...connectEmail}
-                />
-                <MDBInput
-                  label="Type your address"
-                  icon="lock"
-                  group
-                  type="text"
-                  validate
-                  className="py-2 my-3"
-                  {...connectAddress}
-                />
-                <MDBInput
-                  label="Type your birthday"
-                  icon="lock"
-                  group
-                  type="text"
-                  validate
-                  className="py-2 my-3"
-                  {...connectBirthday}
-                />
-                <MDBInput
-                  label="Type your phone number"
-                  icon="lock"
-                  group
-                  type="text"
-                  validate
-                  className="py-2 my-3"
-                  {...connectPhone}
-                />
-                <MDBInput
-                  label="Type your gender"
-                  icon="lock"
-                  group
-                  type="text"
-                  validate
-                  className="py-2 my-3"
-                  {...connectGender}
-                />
-                <MDBInput
-                  label="Select your hobbies"
-                  icon="lock"
-                  group
-                  type="text"
-                  validate
-                  className="py-2 my-3"
-                  {...connectGender}
-                />
-              </div>
-            </form>
-          </MDBModalBody>
+          <MDBModalBody></MDBModalBody>
+          <Form>
+            <Form.Group className="mb-3 px-3" controlId="formEditUser">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter your name" />
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter your last name" />
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="text" placeholder="Enter your email" />
+              <Form.Label>Gender</Form.Label>
+              <Form.Control type="text" placeholder="Enter your gender" />
+              <Form.Label>Phone number</Form.Label>
+              <Form.Control type="text" placeholder="Enter your phone number" />
+              <Form.Label>Address</Form.Label>
+              <Form.Control type="text" placeholder="Enter your address" />
+              <Form.Label>Date of birdth</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your date of birth"
+              />
+              <Form.Label>Hobbies</Form.Label>
+              <Form.Control type="text" placeholder="Enter your hobbies" />
+            </Form.Group>
+          </Form>
           <MDBModalFooter>
             <MDBBtn color="secondary" onClick={closeWindow}>
               Cancel
