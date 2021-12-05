@@ -56,24 +56,61 @@ export default function EditUser() {
           <Form>
             <Form.Group className="mb-3 px-3" controlId="formEditUser">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter your name" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your name"
+                {...connectName}
+                value={name}
+              />
               <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter your last name" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your last name"
+                {...connectLastName}
+                value={lastName}
+              />
               <Form.Label>Email</Form.Label>
-              <Form.Control type="text" placeholder="Enter your email" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your email"
+                {...connectEmail}
+                value={email}
+              />
               <Form.Label>Gender</Form.Label>
-              <Form.Control type="text" placeholder="Enter your gender" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your gender"
+                {...connectGender}
+                value={gender}
+              />
               <Form.Label>Phone number</Form.Label>
-              <Form.Control type="text" placeholder="Enter your phone number" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your phone number"
+                {...connectPhone}
+                value={phone}
+              />
               <Form.Label>Address</Form.Label>
-              <Form.Control type="text" placeholder="Enter your address" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your address"
+                {...connectAddress}
+                value={address}
+              />
               <Form.Label>Date of birdth</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your date of birth"
+                {...connectBirthday}
+                value={birthday}
               />
               <Form.Label>Hobbies</Form.Label>
-              <Form.Control type="text" placeholder="Enter your hobbies" />
+              <Form.Control
+                type="text"
+                placeholder="Enter your hobbies"
+                {...connectHobbies}
+                value={hobbies}
+              />
             </Form.Group>
           </Form>
           <MDBModalFooter>
