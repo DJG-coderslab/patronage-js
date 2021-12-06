@@ -30,6 +30,7 @@ export default function EditUser() {
   } = useForm();
 
   const closeWindow = () => {
+    console.log("Window was clodsed");
     dispatch(setShowEditUserWindow(false));
     // dispatch(setUserToEdit(""));
   };
@@ -39,13 +40,16 @@ export default function EditUser() {
     setValue("lastName", u.lastName);
     setValue("email", u.email);
     setValue("address", u.address);
-    setValue("phone", u.phoneNumber);
+    setValue("phoneNumber", u.phoneNumber);
     setValue("dateOfBirth", u.dateOfBirth);
     setValue("gender", u.gender);
     setValue("hobbies", u.hobbies);
-  }, [u]);
+  }, []);
 
-  const onSubmit = (data) => console.log("Data: ", data);
+  const onSubmit = (data, e) => {
+    e.preventDefault();
+    console.log("Data: ", data, e);
+  };
   console.log("Errors: ", errors);
 
   return (
@@ -112,7 +116,7 @@ export default function EditUser() {
               <Form.Control
                 type="text"
                 placeholder="Enter your phone number"
-                {...register("phone")}
+                {...register("phoneNumber")}
               />
               <Form.Label>Address</Form.Label>
               <Form.Control
@@ -143,7 +147,9 @@ export default function EditUser() {
               <MDBBtn color="secondary" onClick={closeWindow}>
                 Cancel
               </MDBBtn>
-              <MDBBtn color="success">Send it</MDBBtn>
+              <MDBBtn type="submit" color="success">
+                Send it
+              </MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
