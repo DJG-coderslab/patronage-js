@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   MDBBtn,
   MDBModal,
@@ -10,11 +10,8 @@ import {
   MDBModalDialog,
   MDBModalHeader,
   MDBModalTitle,
-  MDBInput,
 } from "mdb-react-ui-kit";
 import { setShowEditUserWindow, setUserToEdit } from "../../redux/actions";
-import useInput from "./../../hooks/useInput";
-import userType from "../../types/user";
 import { Form } from "react-bootstrap";
 import * as R from "ramda";
 
@@ -24,17 +21,8 @@ export default function EditUser() {
     (state) => state.userReducer
   );
   const u = useSelector((state) => state.userReducer.userToEdit);
-  // const [name, connectName, setName] = useInput(u.name);
-  // const [lastName, connectLastName, setLastName] = useInput(u.lastName);
-  // const [email, connectEmail, setEmail] = useInput(u.email);
-  // const [address, connectAddress, setAddress] = useInput(u.address);
-  // const [birthday, connectBirthday, setBirthday] = useInput(u.dateOfBirth);
-  // const [phone, connectPhone, setPhone] = useInput(u.phoneNumber);
-  // const [gender, connectGender, setGender] = useInput(u.gender);
-  // const [hobbies, connectHobbies, setHobbies] = useInput("");
 
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -47,14 +35,6 @@ export default function EditUser() {
   };
 
   useEffect(() => {
-    console.log("U was changed ");
-    // setName(u.name);
-    // setLastName(u.lastName);
-    // setEmail(u.email);
-    // setAddress(u.address);
-    // setBirthday(u.dateOfBirth);
-    // setPhone(u.phoneNumber);
-    // setGender(u.gender);
     setValue("name", u.name);
     setValue("lastName", u.lastName);
     setValue("email", u.email);
@@ -67,8 +47,6 @@ export default function EditUser() {
 
   const onSubmit = (data) => console.log("Data: ", data);
   console.log("Errors: ", errors);
-
-  const selecty = (w2Hobbies, usrHobbies) => {};
 
   return (
     <MDBModal show={showEditUserWindow} staticBackdrop tabIndex="-1">
@@ -84,19 +62,6 @@ export default function EditUser() {
               />
             </MDBModalHeader>
             <MDBModalBody></MDBModalBody>
-
-            {/* <Controller
-              control={control}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Form.Control
-                  type="text"
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="firstName"
-            /> */}
-
             <Form.Group className="mb-3 px-3" controlId="formEditUser">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -120,33 +85,27 @@ export default function EditUser() {
               <Form.Group>
                 <Form.Check
                   id="maleID"
-                  // name="gender"
                   inline
                   label="male"
                   type="radio"
                   value="male"
                   {...register("gender")}
-                  // checked={gender === "male" ? true : false}
                 />
                 <Form.Check
                   id="femaleID"
-                  // name="gender"
                   {...register("gender")}
                   value="female"
                   inline
                   label="female"
                   type="radio"
-                  // checked={gender === "female" ? true : false}
                 />
                 <Form.Check
                   id="nothingID"
-                  // name="gender"
                   {...register("gender")}
                   value="doesn'tMatter"
                   inline
                   label="doesn't matter"
                   type="radio"
-                  // checked={gender === "doesentmatter" ? true : false}
                 />
               </Form.Group>
               <Form.Label>Phone number</Form.Label>
@@ -173,14 +132,11 @@ export default function EditUser() {
                 multiple
                 {...register("hobbies")}
               >
-                {R.pipe(
-                  R.innerJoin((hobby, userHobby) => hobby.id === userHobby),
-                  R.map((hobby) => (
-                    <option key={hobby.id} value={hobby.name}>
-                      {hobby.name}
-                    </option>
-                  ))
-                )(hobbies, u.hobbies)}
+                {R.map((hobby) => (
+                  <option key={hobby.id} value={hobby.id}>
+                    {hobby.name}
+                  </option>
+                ))(hobbies)}
               </Form.Select>
             </Form.Group>
             <MDBModalFooter>
