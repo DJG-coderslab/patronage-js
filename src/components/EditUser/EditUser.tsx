@@ -11,16 +11,21 @@ import {
   MDBModalHeader,
   MDBModalTitle,
 } from "mdb-react-ui-kit";
-import { setShowEditUserWindow, setUserToEdit } from "../../redux/actions";
+import {
+  modifyUser,
+  setShowEditUserWindow,
+  setUserToEdit,
+} from "../../redux/actions";
 import { Form } from "react-bootstrap";
 import * as R from "ramda";
+import userType from "../../../.history/src/types/user_20211130162346";
 
 export default function EditUser() {
   const dispatch = useDispatch();
   const { hobbies, showEditUserWindow } = useSelector(
     (state) => state.userReducer
   );
-  const u = useSelector((state) => state.userReducer.userToEdit);
+  const u: userType = useSelector((state) => state.userReducer.userToEdit);
 
   const {
     register,
@@ -32,7 +37,7 @@ export default function EditUser() {
   const closeWindow = () => {
     console.log("Window was clodsed");
     dispatch(setShowEditUserWindow(false));
-    // dispatch(setUserToEdit(""));
+    dispatch(setUserToEdit(""));
   };
 
   useEffect(() => {
@@ -44,11 +49,15 @@ export default function EditUser() {
     setValue("dateOfBirth", u.dateOfBirth);
     setValue("gender", u.gender);
     setValue("hobbies", u.hobbies);
-  }, []);
+  }, [u]);
 
   const onSubmit = (data, e) => {
     e.preventDefault();
-    console.log("Data: ", data, e);
+    // console.log("Data: ", data, e);
+    data["id"] = u.id;
+    data["age"] = -1;
+    dispatch(modifyUser(data));
+    dispatch(setShowEditUserWindow(false));
   };
   console.log("Errors: ", errors);
 

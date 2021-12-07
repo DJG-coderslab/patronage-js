@@ -108,6 +108,28 @@ const getHobbies = () => (dispatch: any) => {
   fetchHobbies();
 };
 
+const modifyUser = (user: userType) => (dispatch: any) => {
+  const putUser = async (userRecord) => {
+    try {
+      const id = userRecord.id;
+      delete userRecord["id"];
+      console.log("User to modufy: ", userRecord);
+      const resp = await fetch(`${URLDB}/users/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(userRecord),
+        headers: {
+          "Content-Type": "application/json",
+      }
+      });
+      const data = await resp.json();
+      console.log("Rcv: ", data);
+    } catch (err) {
+      console.error("Modyfication failed: ", err);
+    }
+  };
+  putUser(user);
+};
+
 const undoDeleteTimer = () => (dispatch: any, getState: any) => {
   const timerID = setTimeout(() => {
     console.log("Timer is done");
@@ -138,6 +160,7 @@ export {
   getHobbies,
   getUsersList,
   markToDelete,
+  modifyUser,
   resetConfirmation,
   setAllowDelete,
   setChecked,
