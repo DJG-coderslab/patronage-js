@@ -120,7 +120,6 @@ const modifyUser = (user: userType, setting: any) => (dispatch: any) => {
     try {
       const id = userRecord.id;
       delete userRecord["id"];
-      console.log("User to modufy: ", userRecord);
       const resp = await fetch(`${URLDB}/users/${id}`, {
         method: "PUT",
         body: JSON.stringify(userRecord),
@@ -130,7 +129,6 @@ const modifyUser = (user: userType, setting: any) => (dispatch: any) => {
       });
       const data = await resp.json();
       const changedUser = R.merge(data, setting);
-      console.log("Rcv: ", changedUser);
       dispatch(changeUser(changedUser));
     } catch (err) {
       console.error("Modyfication failed: ", err);

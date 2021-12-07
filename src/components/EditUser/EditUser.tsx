@@ -25,7 +25,7 @@ export default function EditUser() {
   const { hobbies, showEditUserWindow } = useSelector(
     (state) => state.userReducer
   );
-  const u: userType = useSelector((state) => state.userReducer.userToEdit);
+  const user: userType = useSelector((state) => state.userReducer.userToEdit);
 
   const {
     register,
@@ -35,33 +35,31 @@ export default function EditUser() {
   } = useForm();
 
   const closeWindow = () => {
-    console.log("Window was clodsed");
     dispatch(setShowEditUserWindow(false));
     dispatch(setUserToEdit(""));
   };
 
   useEffect(() => {
-    setValue("name", u.name);
-    setValue("lastName", u.lastName);
-    setValue("email", u.email);
-    setValue("address", u.address);
-    setValue("phoneNumber", u.phoneNumber);
-    setValue("dateOfBirth", u.dateOfBirth);
-    setValue("gender", u.gender);
-    setValue("hobbies", u.hobbies);
-  }, [u]);
+    setValue("name", user.name);
+    setValue("lastName", user.lastName);
+    setValue("email", user.email);
+    setValue("address", user.address);
+    setValue("phoneNumber", user.phoneNumber);
+    setValue("dateOfBirth", user.dateOfBirth);
+    setValue("gender", user.gender);
+    setValue("hobbies", user.hobbies);
+  }, [user]);
 
   const onSubmit = (data, e) => {
-    // TODO it's not a pure function :-(
+    // TODO it's not a pure function yet :-(
     e.preventDefault();
     const localSetting = {
-      isShowing: u.isShowing,
-      isDeleling: u.isDeleting,
-      isChecked: u.isChecked,
+      isShowing: user.isShowing,
+      isDeleling: user.isDeleting,
+      isChecked: user.isChecked,
     };
-    data["id"] = u.id;
+    data["id"] = user.id;
     data["age"] = -1;
-    console.log("To mod: ", u);
     dispatch(modifyUser(data, localSetting));
     dispatch(setShowEditUserWindow(false));
   };
@@ -86,19 +84,21 @@ export default function EditUser() {
               <Form.Control
                 type="text"
                 placeholder="Enter your name"
-                {...register("name", { required: true })}
+                {...register("name", { required: "Please enter the name" })}
               />
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your last name"
-                {...register("lastName")}
+                {...register("lastName", {
+                  required: "Please enter the last name",
+                })}
               />
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter your email"
-                {...register("email")}
+                {...register("email", { required: "please enter the email" })}
               />
               <Form.Label>Gender</Form.Label>
               <Form.Group>
@@ -143,13 +143,17 @@ export default function EditUser() {
               <Form.Control
                 type="text"
                 placeholder="Enter your date of birth"
-                {...register("dateOfBirth")}
+                {...register("dateOfBirth", {
+                  required: "Please enter date of birth",
+                })}
               />
               <Form.Label>Hobbies</Form.Label>
               <Form.Select
                 placeholder="Enter your hobbies"
                 multiple
-                {...register("hobbies")}
+                {...register("hobbies", {
+                  required: "Please select at least one hobby",
+                })}
               >
                 {R.map((hobby) => (
                   <option key={hobby.id} value={hobby.id}>
