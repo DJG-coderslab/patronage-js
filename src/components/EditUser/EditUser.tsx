@@ -52,14 +52,20 @@ export default function EditUser() {
   }, [u]);
 
   const onSubmit = (data, e) => {
+    // TODO it's not a pure function :-(
     e.preventDefault();
-    // console.log("Data: ", data, e);
+    const localSetting = {
+      isShowing: u.isShowing,
+      isDeleling: u.isDeleting,
+      isChecked: u.isChecked,
+    };
     data["id"] = u.id;
     data["age"] = -1;
-    dispatch(modifyUser(data));
+    console.log("To mod: ", u);
+    dispatch(modifyUser(data, localSetting));
     dispatch(setShowEditUserWindow(false));
   };
-  console.log("Errors: ", errors);
+  console.error("Errors: ", errors);
 
   return (
     <MDBModal show={showEditUserWindow} staticBackdrop tabIndex="-1">

@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import * as R from "ramda";
 import {
+  changeUser,
+  CHANGE_USER,
   CHECK_ALL,
   MARK_TO_DELETE,
   RESET_CONFIRMATION,
@@ -59,6 +61,14 @@ const userReducer = (
   { type, payload }: actionType
 ): AppState => {
   switch (type) {
+    case CHANGE_USER:
+      const changedUsers = R.filter((user: userType) => user.id !== payload.id)(
+        state.users
+      );
+      // R.append(payload, changedUsers);
+      changedUsers.push(payload);
+      console.log("reducer: ", payload, changedUsers);
+      return { ...state, users: changedUsers };
     case CHECK_ALL:
       const checkedAllUsers: userType[] = state.users;
       const reRenderCheckedAllUsers = state.reRenderUserList;
@@ -123,10 +133,10 @@ const userReducer = (
         isShowing: true,
       }))(payload);
       return { ...state, users };
-    
+
     case SET_HOBBIES:
       return { ...state, hobbies: payload };
-    
+
     case SET_USER_TO_EDIT:
       return { ...state, userToEdit: payload };
 
@@ -146,6 +156,10 @@ const userReducer = (
   }
 };
 
-export default combineReducers({
+const rootReducer = combineReducers({
   userReducer,
 });
+
+export default rootReducer;
+
+export type RootState = ReturnType<typeof rootReducer>;

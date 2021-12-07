@@ -2,7 +2,9 @@ import { URLDB } from "./../configApp";
 import actionType from "../types/action";
 import userType from "./../types/user";
 import hobbyType from "../types/hobbies";
+import * as R from "ramda";
 
+const CHANGE_USER: string = "CHANGE_USER";
 const CHECK_ALL: string = "CHECK_ALL";
 const MARK_TO_DELETE: string = "MARK_TO_DELETE";
 const RESET_CONFIRMATION: string = "RESET_CONFIRMATION";
@@ -16,6 +18,11 @@ const SET_USERS: string = "SET_USERS";
 const SET_USER_TO_EDIT: string = "SET_USER_TO_EDIT";
 const SET_TIMER_ID: string = "SET_TIMER_ID";
 const UNDO_DETETE: string = "UNDO_DELETE";
+
+const changeUser: any = (value: userType): actionType => ({
+  type: CHANGE_USER,
+  payload: value,
+});
 
 const checkAll: any = (value: Boolean): actionType => ({
   type: CHECK_ALL,
@@ -108,7 +115,7 @@ const getHobbies = () => (dispatch: any) => {
   fetchHobbies();
 };
 
-const modifyUser = (user: userType) => (dispatch: any) => {
+const modifyUser = (user: userType, setting: any) => (dispatch: any) => {
   const putUser = async (userRecord) => {
     try {
       const id = userRecord.id;
@@ -119,10 +126,12 @@ const modifyUser = (user: userType) => (dispatch: any) => {
         body: JSON.stringify(userRecord),
         headers: {
           "Content-Type": "application/json",
-      }
+        },
       });
       const data = await resp.json();
-      console.log("Rcv: ", data);
+      const changedUser = R.merge(data, setting);
+      console.log("Rcv: ", changedUser);
+      dispatch(changeUser(changedUser));
     } catch (err) {
       console.error("Modyfication failed: ", err);
     }
@@ -143,6 +152,7 @@ const undoDeleteTimer = () => (dispatch: any, getState: any) => {
 };
 
 export {
+  CHANGE_USER,
   CHECK_ALL,
   MARK_TO_DELETE,
   SET_ALLOW_DELETE,
@@ -156,6 +166,7 @@ export {
   SET_USER_TO_EDIT,
   RESET_CONFIRMATION,
   UNDO_DETETE,
+  changeUser,
   checkAll,
   getHobbies,
   getUsersList,

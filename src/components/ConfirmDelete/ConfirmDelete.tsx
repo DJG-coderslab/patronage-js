@@ -9,6 +9,7 @@ import {
   MDBModalTitle,
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/reducer";
 import {
   markToDelete,
   resetConfirmation,
@@ -19,7 +20,9 @@ import {
 
 export default function ConfirmDelete() {
   const dispatch = useDispatch();
-  const { showConfirmation } = useSelector((state) => state.userReducer);
+  const { showConfirmation } = useSelector(
+    (state: RootState) => state.userReducer
+  );
   const closeWindow = () => {
     dispatch(resetConfirmation());
   };
