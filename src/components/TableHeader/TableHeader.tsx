@@ -19,8 +19,15 @@ export default function TableHeader() {
       <MDBCol md="1"></MDBCol>
       <MDBCol md="10">
         <MDBRow>
-          <MDBCol md="3">Name</MDBCol>
-          <MDBCol md="6">email</MDBCol>
+          <MDBCol md="3" className="text-center">
+            Name
+          </MDBCol>
+          <MDBCol md="5" className="text-center">
+            email
+          </MDBCol>
+          <MDBCol md="4" className="text-center">
+            phone
+          </MDBCol>
         </MDBRow>
       </MDBCol>
       <MDBCol md="1">

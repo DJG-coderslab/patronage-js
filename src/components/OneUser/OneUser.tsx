@@ -60,8 +60,11 @@ const OneUser: React.FC<Props> = ({ user }): React.ReactElement => {
                 {user.name} {user.lastName}
               </h5>
             </MDBCol>
-            <MDBCol md="6">
-              <h6>{user.email}</h6>
+            <MDBCol md="5">
+              <p>{user.email}</p>
+            </MDBCol>
+            <MDBCol md="4">
+              <p>{user.phoneNumber}</p>
             </MDBCol>
           </MDBRow>
           {isExpand && (
