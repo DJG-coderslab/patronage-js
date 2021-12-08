@@ -6,8 +6,10 @@ import * as R from "ramda";
 
 const CHANGE_USER: string = "CHANGE_USER";
 const CHECK_ALL: string = "CHECK_ALL";
+const FILTER: string = "FILTER";
 const MARK_TO_DELETE: string = "MARK_TO_DELETE";
 const RESET_CONFIRMATION: string = "RESET_CONFIRMATION";
+const SHOW_ALL_USERS: string = "SHOW_ALL_USERS";
 const SET_ALLOW_DELETE: string = "SET_ALLOW_DELETE";
 const SET_CHECKING: string = "SET_CHECKING";
 const SET_CONFIRMATION: string = "SET_CONFIRMATION";
@@ -26,6 +28,11 @@ const changeUser: any = (value: userType): actionType => ({
 
 const checkAll: any = (value: Boolean): actionType => ({
   type: CHECK_ALL,
+  payload: value,
+});
+
+const filter: any = (value: any): actionType => ({
+  type: FILTER,
   payload: value,
 });
 
@@ -82,6 +89,11 @@ const setUsers: any = (value: []): actionType => ({
 const setUserToEdit: any = (value: userType): actionType => ({
   type: SET_USER_TO_EDIT,
   payload: value,
+});
+
+const showAllUsers: any = (): actionType => ({
+  type: SHOW_ALL_USERS,
+  payload: null,
 });
 
 const undoDelete: any = (): actionType => ({
@@ -152,6 +164,7 @@ const undoDeleteTimer = () => (dispatch: any, getState: any) => {
 export {
   CHANGE_USER,
   CHECK_ALL,
+  FILTER,
   MARK_TO_DELETE,
   SET_ALLOW_DELETE,
   SET_CHECKING,
@@ -162,10 +175,12 @@ export {
   SET_TIMER_ID,
   SET_USERS,
   SET_USER_TO_EDIT,
+  SHOW_ALL_USERS,
   RESET_CONFIRMATION,
   UNDO_DETETE,
   changeUser,
   checkAll,
+  filter,
   getHobbies,
   getUsersList,
   markToDelete,
@@ -178,6 +193,7 @@ export {
   setShowUndoWindow,
   setUsers,
   setUserToEdit,
+  showAllUsers,
   undoDelete,
   undoDeleteTimer,
 };

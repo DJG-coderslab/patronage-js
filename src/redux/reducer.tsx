@@ -3,6 +3,7 @@ import * as R from "ramda";
 import {
   CHANGE_USER,
   CHECK_ALL,
+  FILTER,
   MARK_TO_DELETE,
   RESET_CONFIRMATION,
   SET_ALLOW_DELETE,
@@ -14,6 +15,7 @@ import {
   SET_TIMER_ID,
   SET_USERS,
   SET_USER_TO_EDIT,
+  SHOW_ALL_USERS,
   UNDO_DETETE,
 } from "./actions";
 import actionType from "./../types/action";
@@ -83,6 +85,15 @@ const userReducer = (
         reRenderUserList: !reRenderCheckedAllUsers,
       };
 
+    case FILTER:
+      const filteredUsers = R.filter((user: userType) => {
+        if (user[payload.col] !== payload.value) {
+          user.isShowing = false;
+        }
+        return user;
+      }, state.users);
+      return { ...state, users: filteredUsers };
+
     case MARK_TO_DELETE:
       const markToDelete: userType[] = state.users;
       const { reRenderUserList } = state;
@@ -139,6 +150,13 @@ const userReducer = (
 
     case SET_USER_TO_EDIT:
       return { ...state, userToEdit: payload };
+
+    case SHOW_ALL_USERS:
+      const allUsers = R.map((user) => {
+        user.isShowing = true;
+        return user;
+      }, state.users);
+      return { ...state, users: allUsers };
 
     case UNDO_DETETE:
       const deletedUsers: userType[] = state.users;
