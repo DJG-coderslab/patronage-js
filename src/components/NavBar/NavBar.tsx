@@ -1,10 +1,8 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as R from "ramda";
 import { MDBBtn, MDBContainer, MDBIcon, MDBNavbar } from "mdb-react-ui-kit";
 import useInput from "../../hooks/useInput";
 import { filter, showAllUsers } from "../../redux/actions";
-import { userColumns } from "../../configApp";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -13,9 +11,9 @@ export default function NavBar() {
   const columns = R.pipe(
     R.head,
     R.keys,
-    R.drop(1),
-    R.dropLast(3)
+    R.dropLast(4)
   )(useSelector((state) => state.userReducer.users));
+  // TODO it's not good solution, the order might by changed...
 
   const handlingSearch = (e) => {
     e.preventDefault();
@@ -31,6 +29,7 @@ export default function NavBar() {
       <MDBContainer fluid>
         <form className="d-flex input-group w-auto">
           <select {...connectCol}>
+            <option>Select column</option>
             {/* <option>All</option> */}
             // TODO to implement in future
             {R.map(

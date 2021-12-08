@@ -87,9 +87,10 @@ const userReducer = (
 
     case FILTER:
       const filteredUsers = R.filter((user: userType) => {
-        if (user[payload.col] !== payload.value) {
+        if (!R.toUpper(user[payload.col]).includes(R.toUpper(payload.value))) {
           user.isShowing = false;
         }
+        // TODO for "" shoud be showing all item for selected column
         return user;
       }, state.users);
       return { ...state, users: filteredUsers };
