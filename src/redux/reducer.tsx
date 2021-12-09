@@ -12,6 +12,7 @@ import {
   SET_HOBBIES,
   SET_SHOW_EDIT_USER_WINDOW,
   SET_SHOW_UNDO_WINDOW,
+  SET_SORTING,
   SET_TIMER_ID,
   SET_USERS,
   SET_USER_TO_EDIT,
@@ -133,6 +134,9 @@ const userReducer = (
 
     case SET_SHOW_UNDO_WINDOW:
       return { ...state, showUndoWindow: payload };
+
+    case SET_SORTING:
+      return { ...state, users: payload };
 
     case SET_TIMER_ID:
       return { ...state, timerID: payload };

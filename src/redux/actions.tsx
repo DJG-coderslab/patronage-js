@@ -16,6 +16,7 @@ const SET_CONFIRMATION: string = "SET_CONFIRMATION";
 const SET_HOBBIES: string = "SET_HOBBIES";
 const SET_SHOW_EDIT_USER_WINDOW: string = "SHOW_EDIT_USER_WINDOW";
 const SET_SHOW_UNDO_WINDOW: string = "SET_SHOW_UNDO_WINDOW";
+const SET_SORTING: string = "SET_SORTING";
 const SET_USERS: string = "SET_USERS";
 const SET_USER_TO_EDIT: string = "SET_USER_TO_EDIT";
 const SET_TIMER_ID: string = "SET_TIMER_ID";
@@ -73,6 +74,11 @@ const setShowEditUserWindow: any = (value: Boolean): actionType => ({
 
 const setShowUndoWindow: any = (value: Boolean): actionType => ({
   type: SET_SHOW_UNDO_WINDOW,
+  payload: value,
+});
+
+const setSorting: any = (value: userType[]): actionType => ({
+  type: SET_SORTING,
   payload: value,
 });
 
@@ -149,6 +155,31 @@ const modifyUser = (user: userType, setting: any) => (dispatch: any) => {
   putUser(user);
 };
 
+const sortByColumn =
+  (column: string, direction: string) => (dispatch: any, getState: any) => {
+    const compareValues = (key: string, order: string = "asc") => {
+      return (a: any, b: any) => {
+        if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+          return 0;
+        }
+        const varA = typeof a[key] === "string" ? R.toUpper(a[key]) : a[key];
+        const varB = typeof b[key] === "string" ? R.toUpper(b[key]) : b[key];
+        let comparison = 0;
+        if (varA > varB) {
+          comparison = 1;
+        } else if (varA < varB) {
+          comparison = -1;
+        }
+        return order === "desc" ? comparison * -1 : comparison;
+      };
+    };
+    dispatch(
+      setSorting(
+        R.sort(compareValues(column, direction), getState().userReducer.users)
+      )
+    );
+  };
+
 const undoDeleteTimer = () => (dispatch: any, getState: any) => {
   const timerID = setTimeout(() => {
     console.log("Timer is done");
@@ -172,6 +203,7 @@ export {
   SET_HOBBIES,
   SET_SHOW_EDIT_USER_WINDOW,
   SET_SHOW_UNDO_WINDOW,
+  SET_SORTING,
   SET_TIMER_ID,
   SET_USERS,
   SET_USER_TO_EDIT,
@@ -194,6 +226,7 @@ export {
   setUsers,
   setUserToEdit,
   showAllUsers,
+  sortByColumn,
   undoDelete,
   undoDeleteTimer,
 };

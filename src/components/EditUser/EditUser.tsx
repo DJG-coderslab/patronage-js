@@ -63,7 +63,7 @@ export default function EditUser() {
     dispatch(modifyUser(data, localSetting));
     dispatch(setShowEditUserWindow(false));
   };
-  console.error("Errors: ", errors);
+  // console.error("Errors: ", errors);
 
   return (
     <MDBModal show={showEditUserWindow} staticBackdrop tabIndex="-1">
