@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { BaseSyntheticEvent, useEffect, SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   MDBBtn,
   MDBModal,
@@ -18,14 +18,18 @@ import {
 } from "../../redux/actions";
 import { Form } from "react-bootstrap";
 import * as R from "ramda";
-import userType from "../../../.history/src/types/user_20211130162346";
+import { RootState } from "../../redux/reducer";
+import { ModifiedUserDataType, userType } from "../../types/user";
+import hobbyType from "../../types/hobbies";
 
 export default function EditUser() {
   const dispatch = useDispatch();
   const { hobbies, showEditUserWindow } = useSelector(
-    (state) => state.userReducer
+    (state: RootState) => state.userReducer
   );
-  const user: userType = useSelector((state) => state.userReducer.userToEdit);
+  const user: userType = useSelector(
+    (state: RootState) => state.userReducer.userToEdit
+  );
 
   const {
     register,
@@ -50,17 +54,19 @@ export default function EditUser() {
     setValue("hobbies", user.hobbies);
   }, [user]);
 
-  const onSubmit = (data, e) => {
+  const onSubmit = (
+    data: ModifiedUserDataType,
+    e: BaseSyntheticEvent | undefined
+  ): void => {
     // TODO it's not a pure function yet :-(
-    e.preventDefault();
+    e?.preventDefault();
     const localSetting = {
       isShowing: user.isShowing,
       isDeleling: user.isDeleting,
       isChecked: user.isChecked,
     };
-    data["id"] = user.id;
-    data["age"] = -1;
-    dispatch(modifyUser(data, localSetting));
+    const modifiedUser: userType = { ...data, id: user.id, age: -1 };
+    dispatch(modifyUser(modifiedUser, localSetting));
     dispatch(setShowEditUserWindow(false));
   };
   // console.error("Errors: ", errors);
@@ -155,7 +161,7 @@ export default function EditUser() {
                   required: "Please select at least one hobby",
                 })}
               >
-                {R.map((hobby) => (
+                {R.map((hobby: hobbyType) => (
                   <option key={hobby.id} value={hobby.id}>
                     {hobby.name}
                   </option>

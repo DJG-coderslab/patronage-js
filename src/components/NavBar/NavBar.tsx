@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { BaseSyntheticEvent, useState } from "react";
+import { useDispatch } from "react-redux";
 import * as R from "ramda";
 import { MDBBtn, MDBContainer, MDBIcon, MDBNavbar } from "mdb-react-ui-kit";
 import useInput from "../../hooks/useInput";
@@ -8,16 +8,20 @@ import { filter, showAllUsers, sortByColumn } from "../../redux/actions";
 export default function NavBar() {
   const dispatch = useDispatch();
   const [sortCol, setSortCol] = useState("");
-  const [col, connectCol, setCol] = useInput("");
-  const [value, connectValue, setValue] = useInput("");
-  const columns = R.pipe(
-    R.head,
-    R.keys,
-    R.dropLast(4)
-  )(useSelector((state) => state.userReducer.users));
-  // TODO it's not good solution, the order might by changed...
+  const [col, connectCol] = useInput("");
+  const [value, connectValue] = useInput("");
+  const columns = [
+    "name",
+    "lastName",
+    "email",
+    "gender",
+    "phoneNumber",
+    "address",
+    "dateOfBirth",
+    "hobbies",
+  ];
 
-  const handlingSearch = (e) => {
+  const handlingSearch = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     dispatch(filter({ col, value }));
   };
@@ -26,7 +30,7 @@ export default function NavBar() {
     dispatch(showAllUsers());
   };
 
-  const sort = (direction) => {
+  const sort = (direction: string) => {
     dispatch(sortByColumn(sortCol, direction));
   };
 
@@ -37,9 +41,9 @@ export default function NavBar() {
           <select {...connectCol}>
             <option>Select column</option>
             {/* <option>All</option> */}
-            // TODO to implement in future
+            {/* TODO to implement in future */}
             {R.map(
-              (column) => (
+              (column: string) => (
                 <option key={column} value={column}>
                   {column}
                 </option>

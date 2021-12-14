@@ -21,16 +21,16 @@ import {
 } from "./actions";
 import actionType from "./../types/action";
 import hobbyType from "../types/hobbies";
-import userType from "./../types/user";
+import { userType } from "./../types/user";
 
 type AppState = {
   users: userType[];
   hobbies: hobbyType[];
-  allowDelete: Boolean;
-  reRenderUserList: Boolean;
-  showConfirmation: Boolean;
-  showEditUserWindow: Boolean;
-  showUndoWindow: Boolean;
+  allowDelete: boolean;
+  reRenderUserList: boolean;
+  showConfirmation: boolean;
+  showEditUserWindow: boolean;
+  showUndoWindow: boolean;
   timerID: string;
   userToEdit: userType;
 };
@@ -87,7 +87,7 @@ const userReducer = (
       };
 
     case FILTER:
-      const filteredUsers = R.filter((user: userType) => {
+      const filteredUsers = R.filter<userType>((user: userType) => {
         if (!R.toUpper(user[payload.col]).includes(R.toUpper(payload.value))) {
           user.isShowing = false;
         }

@@ -1,6 +1,6 @@
 import { URLDB } from "./../configApp";
 import actionType from "../types/action";
-import userType from "./../types/user";
+import { userRecordDB, userRecordType, userType } from "./../types/user";
 import hobbyType from "../types/hobbies";
 import * as R from "ramda";
 
@@ -32,7 +32,7 @@ const checkAll: any = (value: Boolean): actionType => ({
   payload: value,
 });
 
-const filter: any = (value: any): actionType => ({
+const filter: any = (value: { col: string; value: string }): actionType => ({
   type: FILTER,
   payload: value,
 });
@@ -134,13 +134,23 @@ const getHobbies = () => (dispatch: any) => {
 };
 
 const modifyUser = (user: userType, setting: any) => (dispatch: any) => {
-  const putUser = async (userRecord) => {
+  const putUser = async (userRecord: userRecordType) => {
     try {
       const id = userRecord.id;
-      delete userRecord["id"];
+      const userRecordDB: userRecordDB = {
+        name: userRecord.name,
+        lastName: userRecord.lastName,
+        email: userRecord.email,
+        gender: userRecord.gender,
+        phoneNumber: userRecord.phoneNumber,
+        address: userRecord.address,
+        dateOfBirth: userRecord.dateOfBirth,
+        hobbies: userRecord.hobbies,
+        age: userRecord.age,
+      };
       const resp = await fetch(`${URLDB}/users/${id}`, {
         method: "PUT",
-        body: JSON.stringify(userRecord),
+        body: JSON.stringify(userRecordDB),
         headers: {
           "Content-Type": "application/json",
         },
